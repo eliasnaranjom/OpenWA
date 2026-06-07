@@ -184,6 +184,31 @@ export class WhatsAppWebJsAdapter extends EventEmitter implements IWhatsAppEngin
           }
         }
 
+        // Handle order message (WhatsApp catalog orders)
+        if (msg.type === 'order') {
+          try {
+            const order = await msg.getOrder();
+            if (order) {
+              incomingMessage.order = {
+                products: (order.products || []).map((p: any) => ({
+                  id: p.id,
+                  name: p.name,
+                  price: p.price,
+                  currency: p.currency,
+                  quantity: p.quantity,
+                  thumbnailUrl: p.thumbnailUrl || undefined,
+                })),
+                subtotal: order.subtotal,
+                total: order.total,
+                currency: order.currency,
+                createdAt: order.createdAt,
+              };
+            }
+          } catch (error) {
+            this.logger.error('Error getting order data', String(error));
+          }
+        }
+
         this.callbacks.onMessage?.(incomingMessage);
       } catch (error) {
         this.logger.error('Error processing incoming message', String(error));

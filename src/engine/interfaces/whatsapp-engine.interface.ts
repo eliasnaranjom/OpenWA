@@ -41,6 +41,20 @@ export interface IncomingMessage {
     id: string;
     body: string;
   };
+  order?: {
+    products: Array<{
+      id: string;
+      name: string;
+      price: string;
+      currency: string;
+      quantity: number;
+      thumbnailUrl?: string;
+    }>;
+    subtotal: string;
+    total: string;
+    currency: string;
+    createdAt: number;
+  };
 }
 
 export interface Contact {
