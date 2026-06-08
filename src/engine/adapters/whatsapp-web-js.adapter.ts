@@ -193,7 +193,7 @@ export class WhatsAppWebJsAdapter extends EventEmitter implements IWhatsAppEngin
                 products: (order.products || []).map((p: any) => ({
                   id: p.id,
                   name: p.name,
-                  price: p.price,
+                  price: String(Number(p.price) / 1000), // WhatsApp stores prices in thousandths of the currency unit
                   currency: p.currency,
                   quantity: p.quantity,
                   thumbnailUrl: p.thumbnailUrl || undefined,
