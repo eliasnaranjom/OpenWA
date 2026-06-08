@@ -221,6 +221,8 @@ export interface EngineEventCallbacks {
   onReady?: (phone: string, pushName: string) => void;
   onMessage?: (message: IncomingMessage) => void;
   onMessageAck?: (messageId: string, ack: number) => void;
+  onMessageEdit?: (id: string, from: string, chatId: string, newBody: string, prevBody: string) => void;
+  onMessageRevoked?: (id: string, from: string, chatId: string, revokedMsgId: string | undefined) => void;
   onDisconnected?: (reason: string) => void;
   onStateChanged?: (state: EngineStatus) => void;
 }

@@ -312,6 +312,12 @@ export class SessionService implements OnModuleDestroy, OnModuleInit {
             this.eventsGateway.emitMessage(id, finalMessage as Record<string, unknown>);
           });
       },
+      onMessageEdit: (msgId: string, from: string, chatId: string, newBody: string, prevBody: string): void => {
+        void this.webhookService.dispatch(id, 'message.edited', { id: msgId, from, chatId, newBody, prevBody });
+      },
+      onMessageRevoked: (msgId: string, from: string, chatId: string, revokedMsgId: string | undefined): void => {
+        void this.webhookService.dispatch(id, 'message.revoked', { id: msgId, from, chatId, revokedMsgId });
+      },
       onDisconnected: (reason: string): void => {
         this.logger.warn(`Session disconnected: ${reason}`, {
           sessionId: id,

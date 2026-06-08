@@ -231,6 +231,27 @@ export class WhatsAppWebJsAdapter extends EventEmitter implements IWhatsAppEngin
       this.callbacks.onMessageAck?.(msg.id._serialized, ack);
     });
 
+    // Message edited
+    this.client.on('message_edit', (msg, newBody, prevBody) => {
+      this.callbacks.onMessageEdit?.(
+        msg.id._serialized,
+        msg.from,
+        msg.from,
+        String(newBody),
+        String(prevBody),
+      );
+    });
+
+    // Message revoked (deleted for everyone)
+    this.client.on('message_revoke_everyone', (msg, revokedMsg) => {
+      this.callbacks.onMessageRevoked?.(
+        msg.id._serialized,
+        msg.from,
+        msg.from,
+        revokedMsg?.id._serialized,
+      );
+    });
+
     this.client.on('disconnected', reason => {
       this.setStatus(EngineStatus.DISCONNECTED);
       this.callbacks.onDisconnected?.(reason);
