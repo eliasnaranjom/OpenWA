@@ -55,6 +55,13 @@ export interface IncomingMessage {
     currency: string;
     createdAt: number;
   };
+  location?: {
+    latitude: number;
+    longitude: number;
+    name?: string;
+    address?: string;
+    url?: string;
+  };
 }
 
 export interface Contact {

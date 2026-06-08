@@ -209,6 +209,17 @@ export class WhatsAppWebJsAdapter extends EventEmitter implements IWhatsAppEngin
           }
         }
 
+        // Handle location message — extract coordinates from msg.location
+        if (msg.type === 'location' && msg.location) {
+          incomingMessage.location = {
+            latitude:  Number(msg.location.latitude),
+            longitude: Number(msg.location.longitude),
+            name:      (msg.location as any).name    || undefined,
+            address:   (msg.location as any).address || undefined,
+            url:       (msg.location as any).url     || undefined,
+          };
+        }
+
         this.callbacks.onMessage?.(incomingMessage);
       } catch (error) {
         this.logger.error('Error processing incoming message', String(error));
