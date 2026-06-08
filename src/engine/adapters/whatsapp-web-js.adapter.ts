@@ -198,8 +198,8 @@ export class WhatsAppWebJsAdapter extends EventEmitter implements IWhatsAppEngin
                   quantity: p.quantity,
                   thumbnailUrl: p.thumbnailUrl || undefined,
                 })),
-                subtotal: order.subtotal,
-                total: order.total,
+                subtotal: String(Number(order.subtotal) / 1000),
+                total: String(Number(order.total) / 1000),
                 currency: order.currency,
                 createdAt: order.createdAt,
               };
