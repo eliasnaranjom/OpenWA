@@ -37,6 +37,7 @@ export interface IncomingMessage {
     filename?: string;
     data?: string; // base64
   };
+  pushName?: string;
   quotedMessage?: {
     id: string;
     body: string;

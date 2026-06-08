@@ -153,6 +153,7 @@ export class WhatsAppWebJsAdapter extends EventEmitter implements IWhatsAppEngin
           timestamp: msg.timestamp,
           fromMe: msg.fromMe,
           isGroup: msg.from.endsWith('@g.us'),
+          pushName: ((msg as unknown as Record<string, unknown>)._data as Record<string, unknown>)?.notifyName as string | undefined || undefined,
         };
 
         // Handle media
